@@ -1,9 +1,17 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
+import Link from 'next/link'
 
 const Home: NextPage = () => {
     return (
         <div className="container">
+            <div className="row mb-5 mt-5">
+                <div className="col">
+                    <Link href="/character/eu/ravencrest/shadstab">
+                        <a>TEST DATA HERE GO TO THIS LINK SEARCH DOES NOT WORK</a>
+                    </Link>
+                </div>
+            </div>
             <div className="row mt-5 mb-5">
                 <div className="col center-items">
                     <div className="search-wrapper">
