@@ -7,7 +7,7 @@ const Home: NextPage = () => {
         <div className="container">
             <div className="row mb-5 mt-5">
                 <div className="col">
-                    <Link href="/character/eu/ravencrest/shadstab">
+                    <Link href="/character/eu/twisting-nether/lacifyra">
                         <a>TEST DATA HERE GO TO THIS LINK SEARCH DOES NOT WORK</a>
                     </Link>
                 </div>
@@ -21,7 +21,7 @@ const Home: NextPage = () => {
                             </div>
                             <div className="col-auto">
                                 <select name="select-region" id="region" className="form-select form-select-lg">
-                                    <option selected>Choose Region</option>
+                                    <option selected defaultValue={''}>Choose Region</option>
                                     <option value="eu">EU</option>
                                     <option value="us">US</option>
                                     <option value="kr">KR</option>
