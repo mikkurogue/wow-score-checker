@@ -8,9 +8,12 @@ import { MythicPlusProfile } from "./models/mythic.plus.profile.endpoint.model"
 export default class ApiFetchDataMythicPlusProfile {
     private _apiAuthTokens: ApiAuthTokens = new ApiAuthTokens()
     constructor() {}
-    //https://eu.api.blizzard.com/profile/wow/character/twistingnether/lacifyra/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=UShxNGqn1kdJP6aXGYE3qnV0TbIgnvjH2a
+    //https://eu.api.blizzard.com/profile/wow/character/twisting-nether/lacifyra/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=UShxNGqn1kdJP6aXGYE3qnV0TbIgnvjH2a
 
     public async getMythicPlusProfile(requestBody: MythicPlusProfile) {
+
+        
+
         //console.log(requestBody)
         const api = new BlizzAPI({
             region: requestBody.region,
@@ -18,6 +21,10 @@ export default class ApiFetchDataMythicPlusProfile {
             clientSecret: this._apiAuthTokens.clientSecret
         })
 
+        const x = this.getAccessToken(api)
+
+
+        console.log(x)
         
         const data = await api.query(
             //`https://${this.region}${this._apiAuthTokens.apiUrl}${this._realmSlug}/${this._characterName}/mythic-keystone-profile/season/${this._seasonId}?namespace=${this._namespace}&locale=en_US&access_token=USHMO9UCmxpzA8AXBmrv5r0Ns6JIvbdOlM`
@@ -25,5 +32,16 @@ export default class ApiFetchDataMythicPlusProfile {
         )
 
         console.log(data)
+    }
+
+    private async getAccessToken(api: BlizzAPI) {
+        const accessToken = await api.getAccessToken()
+
+        return accessToken
+    }
+
+    private async validateAccessToken(api: BlizzAPI,region: string, token: string) {
+        // todo
+        return false
     }
 }
