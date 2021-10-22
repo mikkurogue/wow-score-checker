@@ -11,9 +11,6 @@ export default class ApiFetchDataMythicPlusProfile {
     //https://eu.api.blizzard.com/profile/wow/character/twisting-nether/lacifyra/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=UShxNGqn1kdJP6aXGYE3qnV0TbIgnvjH2a
 
     public async getMythicPlusProfile(requestBody: MythicPlusProfile) {
-
-        
-
         //console.log(requestBody)
         const api = new BlizzAPI({
             region: requestBody.region,
@@ -25,7 +22,8 @@ export default class ApiFetchDataMythicPlusProfile {
 
         
         const data = await api.query(
-            'https://' + requestBody.region + this._apiAuthTokens.apiUrl + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile/?namespace=profile-' + requestBody.region + '&access_token=' + _accessToken
+            '/profile/wow/character/twisting-nether/lacifyra/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=' + _accessToken
+            // 'https://' + requestBody.region + this._apiAuthTokens.apiUrl + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile/?namespace=profile-' + requestBody.region + '&access_token=' + _accessToken
         )
 
         // console.log(data)

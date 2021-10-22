@@ -43,3 +43,22 @@ a {
     background-color: #17a2b8;
     border-color: #17a2b8;
 }
+
+.basic-char-details-wrapper {
+    padding: 10px;
+    color: #17a2b8;
+}
+
+.char-name {
+    font-size: 26px;
+}
+
+.char-name:hover {
+    color: #fff;
+}
+
+.current-rating {
+    display:block;
+    float:right;
+    font-size: 26px;
+}
