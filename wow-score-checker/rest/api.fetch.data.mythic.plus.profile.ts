@@ -21,17 +21,16 @@ export default class ApiFetchDataMythicPlusProfile {
             clientSecret: this._apiAuthTokens.clientSecret
         })
 
-        const x = this.getAccessToken(api)
+        const _accessToken = await this.getAccessToken(api)
 
-
-        console.log(x)
         
         const data = await api.query(
-            //`https://${this.region}${this._apiAuthTokens.apiUrl}${this._realmSlug}/${this._characterName}/mythic-keystone-profile/season/${this._seasonId}?namespace=${this._namespace}&locale=en_US&access_token=USHMO9UCmxpzA8AXBmrv5r0Ns6JIvbdOlM`
-            'https://' + requestBody.realm + this._apiAuthTokens.apiUrl + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile/season/' + requestBody.seasonId + '?namespace=profile-' + requestBody.region
+            'https://' + requestBody.region + this._apiAuthTokens.apiUrl + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile/?namespace=profile-' + requestBody.region + '&access_token=' + _accessToken
         )
 
-        console.log(data)
+        // console.log(data)
+
+        return data
     }
 
     private async getAccessToken(api: BlizzAPI) {
