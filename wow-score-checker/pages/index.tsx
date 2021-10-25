@@ -32,9 +32,6 @@ const Home: NextPage = () => {
         } else {
             console.log('no recents')
         }
-
-        console.log(realms)
-
     }, [])
 
     const handleSubmit = (e: any) => {
@@ -77,8 +74,6 @@ const Home: NextPage = () => {
     }
 
     const handleChangeRegion = (e: any) => {
-
-        //https://us.api.blizzard.com/data/wow/realm/index?namespace=dynamic-uslocale=en_US&access_token=USdP0Yt3giAIkcPM8nyOmWAoGEdxdmZGXj
         e.preventDefault()
         console.log('changing realms...')
 
@@ -100,7 +95,19 @@ const Home: NextPage = () => {
 
         return (
             <>
-                <select ref={realmRef} name="select-realm" id="realm" className="form-select form-select-lg">
+
+                <input ref={realmRef} className="form-select form-select-lg" list="datalist" placeholder="Select realm" />
+                <datalist id="datalist">
+                    {
+                        realms.realms.map((realm: any, index: number) => {
+                            return (
+                                <option key={index} value={realm.slug}/>
+                            )
+                        })
+                    }
+                </datalist>
+
+                {/* <select ref={realmRef} name="select-realm" id="realm" className="form-select form-select-lg">
                     <option>Choose Realm</option>
                     {
                         realms.realms.map((realm: any, index: number) => {
@@ -109,7 +116,7 @@ const Home: NextPage = () => {
                             )
                         })
                     }
-                </select>
+                </select> */}
             </>
         )
     }

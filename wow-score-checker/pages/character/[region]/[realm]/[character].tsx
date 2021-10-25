@@ -4,13 +4,21 @@ import ApiFetchDataMythicPlusProfile from '../../../../rest/api.fetch.data.mythi
 import { MythicPlusProfile } from '../../../../rest/models/mythic.plus.profile.endpoint.model'
 import { isSSR } from '../../../../Helpers/utils'
 import CharacterModel, { BestRuns } from './character'
+import ApiGetCharAppreance from '../../../../rest/api.get.char.appearace'
+import ApiGetCharGear from '../../../../rest/api.get.char.gear'
+import ApiFetchCharacter from '../../../../rest/api.fetch.character'
+
 
 function Character(props: any) {
 
     const router = useRouter()
     const [character, setCharacter] = React.useState({} as CharacterModel)
+    const [profile, setProfile] = React.useState({} as any)
+    const [gear, setGear] = React.useState({} as any)
+    const [mainCharData, setMainCharData] = React.useState({} as any)
 
     React.useEffect(() => {
+                
         const clearState = () => {
             console.log('clearing state')
             setCharacter({} as CharacterModel)
@@ -30,33 +38,76 @@ function Character(props: any) {
             seasonId: 6
         }
 
-        console.log(data)
+        const mythicPlusApi = new ApiFetchDataMythicPlusProfile()
+        const mythicPlusProfile = mythicPlusApi.getMythicPlusProfile(data)
 
-        const api = new ApiFetchDataMythicPlusProfile()
-        const x = api.getMythicPlusProfile(data)
+        const characterAppeareanceApi = new ApiGetCharAppreance(data.region, data.character, data.realm)
+        const characterAppereace = characterAppeareanceApi.getCharacterAppearace()
 
-        x.then((d) => {
-            setCharacter({
-                name: d.character.name,
-                id: d.character.id,
-                realm: d.character.realm.name,
-                mythicPlusRating: {
-                    currentRating: d.current_mythic_rating.rating,
-                    color: {
-                        alpha: d.current_mythic_rating.color.a,
-                        red: d.current_mythic_rating.color.r,
-                        green: d.current_mythic_rating.color.g,
-                        blue: d.current_mythic_rating.color.b
-                    }
-                },
-                bestRuns: d.current_period.best_runs
+        const characterGearApi = new ApiGetCharGear(data.region, data.character, data.realm)
+        const characterGear = characterGearApi.getCharacterAppearace()
 
+
+        const fetchCharApi = new ApiFetchCharacter(data.region, data.character, data.realm)
+        const fetchChar = fetchCharApi.getCharacterAppearace()
+
+        fetchChar.then((d) => {
+            setMainCharData({
+                level: d.level,
+                item_level: d.equipped_item_level
             })
+        })
+
+        characterGear.then((d) => {
+            setGear({
+                gear: d.equipped_items
+            })
+        })
+
+        characterAppereace.then((d) => {
+            setProfile({
+                race: d.playable_race.name,
+                class: d.playable_class.name,
+                active_spec: d.playable_class.active_spec,
+                faction: d.faction.name,
+            })
+        })
+
+        mythicPlusProfile.then((d) => {
+
+            if (d.current_mythic_rating) {
+                setCharacter({
+                    name: d.character.name,
+                    id: d.character.id,
+                    realm: d.character.realm.name,
+                    mythicPlusRating: {
+                        currentRating: d.current_mythic_rating.rating,
+                        color: {
+                            alpha: d.current_mythic_rating.color.a,
+                            red: d.current_mythic_rating.color.r,
+                            green: d.current_mythic_rating.color.g,
+                            blue: d.current_mythic_rating.color.b
+                        }
+                    },
+                    bestRuns: d.current_period.best_runs
+
+                })
+            }
+
+            if (!d.current_mythic_rating) {
+                setCharacter({
+                    name: d.character.name,
+                    id: d.character.id,
+                    realm: d.character.realm.name,
+                })
+            }
+
+
         })
 
     }, [router.isReady])
 
-    if (JSON.stringify(character) === '{}') {
+    if (JSON.stringify(character) === '{}' || JSON.stringify(profile) === '{}' || JSON.stringify(gear) === '{}') {
         return (
             <div>
                 Loading...
@@ -112,23 +163,73 @@ function Character(props: any) {
         </div>)
     }
 
+    const renderRating = () => {
 
-    return (
-        <div className="container">
-            <div className="row mt-5">
+        if (!character.mythicPlusRating) {
+            return (
+                <span className="current-rating">
+                    No rating
+                </span>
+            )
+        }
+
+        return (
+            <span className="current-rating"
+                style={{ color: `rgba(${character.mythicPlusRating.color.red}, ${character.mythicPlusRating.color.green}, ${character.mythicPlusRating.color.blue}, ${character.mythicPlusRating.color.alpha})` }}>
+                Current rating: {character.mythicPlusRating.currentRating}
+            </span>
+        )
+    }
+
+    const renderCharacterGear = () => {
+
+        if (!gear.gear) {
+            return <>No gear</>
+        }
+        var gearlist: any[] = []
+
+        gear.gear.map((item: any) => {
+            gearlist.push(item)
+        })
+
+        console.log(gearlist);
+        
+
+        return (
+            <div className="row">
                 <div className="col">
-                    <div className="basic-char-details-wrapper">
-                        <span className="char-name">{character.name}</span>
-                        <span className="current-rating"
-                            style={{ color: `rgba(${character.mythicPlusRating.color.red}, ${character.mythicPlusRating.color.green}, ${character.mythicPlusRating.color.blue}, ${character.mythicPlusRating.color.alpha})` }}>
-                            Current rating: {character.mythicPlusRating.currentRating}
-                        </span>
+                    <button type="button" className="btn btn-dark-mode" data-bs-toggle="collapse" data-bs-target="#collapseGear" aria-expanded="false" aria-controls="collapseGear">Show gear</button>
+                    <div className="collapse" id="collapseGear">
+                        {
+                            gear.gear.map((item: any) => {
+                                return <span style={{ fontSize: '12px', display: 'block' }} className={item.quality.name} key={item.item.id}> {item.slot.name}: {item.name} {item.level.display_string}</span>
+                            })
+                        }
+                        <span>Equipped ilvl: {mainCharData.item_level}</span>
                     </div>
                 </div>
             </div>
+        )
+    }
 
-            {renderBestRuns()}
-        </div>
+
+    return (
+        <>
+            <title>{character.name}</title>
+
+            <div className="container">
+                <div className="row mt-5">
+                    <div className="col">
+                        <div className="basic-char-details-wrapper">
+                            <span className="char-name">{character.name}</span>
+                            <span className={profile.faction}> {profile.faction} </span> <span> {profile.race}</span> <span className={profile.class}> Level {mainCharData.level} {profile.active_spec} {profile.class}</span>
+                            {renderRating()}
+                        </div>
+                    </div>
+                </div>
+                {renderCharacterGear()}
+                {renderBestRuns()}
+            </div></>
     )
 }
 

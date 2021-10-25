@@ -106,12 +106,12 @@ a {
     color: #FFF468;
 }
 
-.DeathKnight {
+.Death {
     color: #C41E3A;
 }
 
-.DemonHunter {
-    color: #A330C9;
+.Demon {
+    color: #A330C9 !important;
 }
 
 .Druid { 
@@ -148,4 +148,32 @@ a {
 
 .Warrior {
     color: #C69B6D;
+}
+
+.Horde {
+    color: #8C1616;
+}
+
+.Alliance {
+    color: #0070DD;
+}
+
+.Legendary {
+    color: #ff8000;
+}
+
+.Artifact {
+    color: ##E6CC80;
+}
+
+.Epic {
+    color: #a335ee;
+}
+
+.Rare {
+    color: #0070FF;
+}
+
+.Uncommon {
+    color: #1EFF00;
 }

@@ -3,9 +3,9 @@ export default class CharacterModel {
     public name: string
     public id: number
     public realm: string
-    public mythicPlusRating: MythicPlusRating
+    public mythicPlusRating?: MythicPlusRating
 
-    public bestRuns: []
+    public bestRuns?: []
 
 }
 
