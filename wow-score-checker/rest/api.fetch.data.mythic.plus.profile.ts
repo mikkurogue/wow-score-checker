@@ -1,6 +1,5 @@
 import passport from "passport"
 import ApiAuthTokens from "./api.auth.tokens"
-import GetAccessToken from "./api.getAccessToken"
 import Namespace from "./namespace"
 import { BlizzAPI } from "blizzapi"
 import { MythicPlusProfile } from "./models/mythic.plus.profile.endpoint.model"
