@@ -54,7 +54,8 @@ function Character(props: any) {
         fetchChar.then((d) => {
             setMainCharData({
                 level: d.level,
-                item_level: d.equipped_item_level
+                item_level: d.equipped_item_level,
+                guild: d.guild.name
             })
         })
 
@@ -223,6 +224,7 @@ function Character(props: any) {
                         <div className="basic-char-details-wrapper">
                             <span className="char-name">{character.name}</span>
                             <span className={profile.faction}> {profile.faction} </span> <span> {profile.race}</span> <span className={profile.class}> Level {mainCharData.level} {profile.active_spec} {profile.class}</span>
+                            <span> 	&#60;{mainCharData.guild}&#62; </span>
                             {renderRating()}
                         </div>
                     </div>
