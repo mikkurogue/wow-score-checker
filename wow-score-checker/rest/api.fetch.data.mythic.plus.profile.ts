@@ -22,7 +22,7 @@ export default class ApiFetchDataMythicPlusProfile {
 
         
         const data = await api.query(
-            '/profile/wow/character/twisting-nether/lacifyra/mythic-keystone-profile?namespace=profile-eu&locale=en_US&access_token=' + _accessToken
+            '/profile/wow/character/' + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile?namespace=profile-'+ requestBody.region +'&locale=en_US&access_token=' + _accessToken
             // 'https://' + requestBody.region + this._apiAuthTokens.apiUrl + requestBody.realm + '/' + requestBody.character + '/mythic-keystone-profile/?namespace=profile-' + requestBody.region + '&access_token=' + _accessToken
         )
 

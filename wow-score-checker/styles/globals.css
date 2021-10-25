@@ -47,6 +47,8 @@ a {
 .basic-char-details-wrapper {
     padding: 10px;
     color: #17a2b8;
+    border: #17a2b8 1px solid;
+    border-radius: 6px;
 }
 
 .char-name {
@@ -60,5 +62,90 @@ a {
 .current-rating {
     display:block;
     float:right;
-    font-size: 26px;
+    font-size: 18px;
+    line-height: 38px;
+}
+
+.char-span {
+    display: block;
+}
+
+.affixes-wrapper {
+    font-size: 13px;
+    border:#17a2b8 1px solid;
+    border-radius: 6px;
+    padding: 3px;
+}
+
+.affixes-title{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.members-wrapper {
+    font-size: 13px;
+    border:#17a2b8 1px solid;
+    border-radius: 6px;
+    padding: 3px;
+}
+
+.members-title{
+    font-size: 16px;
+    font-weight: 700;
+}
+
+
+
+
+
+/**
+    class colors
+*/
+
+.Rogue {
+    color: #FFF468;
+}
+
+.DeathKnight {
+    color: #C41E3A;
+}
+
+.DemonHunter {
+    color: #A330C9;
+}
+
+.Druid { 
+    color: #FF7C0A;
+}
+
+.Hunter {
+    color: #AAD372;
+}
+
+.Mage {
+    color: #3FC7EB;
+}
+
+.Monk {
+    color: #00FF98;
+}
+
+.Paladin {
+    color: #F48CBA;
+}
+
+.Priest {
+    color: #FFFFFF;
+}
+
+.Shaman {
+    color: #0070DD;
+}
+
+.Warlock {
+    color: #8788EE;
+}
+
+.Warrior {
+    color: #C69B6D;
 }

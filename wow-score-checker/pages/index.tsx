@@ -1,13 +1,41 @@
 import type { NextPage } from 'next'
+import { useRouter } from 'next/dist/client/router'
 import Head from 'next/head'
 import Link from 'next/link'
 
 const Home: NextPage = () => {
+    const router = useRouter()
+
+    const handleNavigation = (_character: any, _region: any, _realm: any) => {
+        if (_character === '') {
+            console.log('Character not filled in...')
+            return
+        }
+
+        if (_region === '') {
+            console.log('Region not filled in...')
+            return
+        }
+
+        if (_realm === '') {
+            console.log('realm not filled in...')
+            return
+        }
+
+        console.log(_character)
+
+        //router.push(`/character/${_region}/${_realm}/${_character}`)
+    }
+
+    const handleSetFavourite = () => {
+
+    }
+
     return (
         <div className="container">
             <div className="row mb-5 mt-5">
                 <div className="col">
-                    <Link href="/character/eu/twisting-nether/lacifyra">
+                    <Link href="/character/eu/twisting-nether/skenk">
                         <a>TEST DATA HERE GO TO THIS LINK SEARCH DOES NOT WORK</a>
                     </Link>
                 </div>
@@ -15,7 +43,7 @@ const Home: NextPage = () => {
             <div className="row mt-5 mb-5">
                 <div className="col center-items">
                     <div className="search-wrapper">
-                        <form className="row g-3">
+                        <div className="row g-3">
                             <div className="col-auto">
                                 <input type="text" className="form-control form-control-lg" placeholder="Search character" />
                             </div>
@@ -32,6 +60,7 @@ const Home: NextPage = () => {
                                 <select name="select-realm" id="realm" className="form-select form-select-lg">
                                     <option selected>Choose Realm</option>
                                     <option value="ravencrest">Ravencrest</option>
+                                    <option value="twisting-nether">Twisting Neter</option>
                                 </select>
                             </div>
                             <div className="col-auto">
@@ -39,7 +68,7 @@ const Home: NextPage = () => {
                                     Go
                                 </button>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
