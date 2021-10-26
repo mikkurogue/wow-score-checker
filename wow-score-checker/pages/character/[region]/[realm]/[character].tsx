@@ -3,16 +3,14 @@ import React from 'react'
 import ApiFetchDataMythicPlusProfile from '../../../../rest/api.fetch.data.mythic.plus.profile'
 import { MythicPlusProfile } from '../../../../rest/models/mythic.plus.profile.endpoint.model'
 import { isSSR } from '../../../../Helpers/utils'
-import CharacterModel, { BestRuns } from './character'
 import ApiGetCharAppreance from '../../../../rest/api.get.char.appearace'
 import ApiGetCharGear from '../../../../rest/api.get.char.gear'
 import ApiFetchCharacter from '../../../../rest/api.fetch.character'
+import type { NextPage } from 'next'
 
-
-function Character(props: any) {
-
+const Character = () => {
     const router = useRouter()
-    const [character, setCharacter] = React.useState({} as CharacterModel)
+    const [character, setCharacter] = React.useState({} as any)
     const [profile, setProfile] = React.useState({} as any)
     const [gear, setGear] = React.useState({} as any)
     const [mainCharData, setMainCharData] = React.useState({} as any)
@@ -21,7 +19,7 @@ function Character(props: any) {
                 
         const clearState = () => {
             console.log('clearing state')
-            setCharacter({} as CharacterModel)
+            setCharacter({} as any)
         }
 
         clearState()
@@ -129,7 +127,7 @@ function Character(props: any) {
                 Best runs this week
             </h3>
             {
-                character.bestRuns.map((run: any, i) => {
+                character.bestRuns.map((run: any, i: number) => {
                     return (
                         <React.Fragment key={i}>
                             <div className="col">
@@ -234,7 +232,6 @@ function Character(props: any) {
             </div></>
     )
 }
-
 
 export default Character
 

@@ -1,4 +1,4 @@
-export default class CharacterModel {
+export class CharacterModel {
 
     public name: string
     public id: number
