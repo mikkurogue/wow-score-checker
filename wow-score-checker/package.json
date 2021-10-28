@@ -2,6 +2,7 @@
   "name": "wow-score-checker",
   "version": "0.1.0",
   "private": true,
+  "license": "No-License",
   "scripts": {
     "dev": "next dev -p 3006",
     "build": "next build",
