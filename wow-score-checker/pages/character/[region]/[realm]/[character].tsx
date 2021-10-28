@@ -7,6 +7,7 @@ import ApiGetCharAppreance from '../../../../rest/api.get.char.appearace'
 import ApiGetCharGear from '../../../../rest/api.get.char.gear'
 import ApiFetchCharacter from '../../../../rest/api.fetch.character'
 import type { NextPage } from 'next'
+import ApiFetchCharacterRaids from '../../../../rest/api.fetch.character.raids'
 
 const Character = () => {
     const router = useRouter()
@@ -14,9 +15,10 @@ const Character = () => {
     const [profile, setProfile] = React.useState({} as any)
     const [gear, setGear] = React.useState({} as any)
     const [mainCharData, setMainCharData] = React.useState({} as any)
+    const [raidProgress, setRaidProgress] = React.useState({} as any)
 
     React.useEffect(() => {
-                
+
         const clearState = () => {
             console.log('clearing state')
             setCharacter({} as any)
@@ -45,9 +47,19 @@ const Character = () => {
         const characterGearApi = new ApiGetCharGear(data.region, data.character, data.realm)
         const characterGear = characterGearApi.getCharacterAppearace()
 
-
         const fetchCharApi = new ApiFetchCharacter(data.region, data.character, data.realm)
         const fetchChar = fetchCharApi.getCharacterAppearace()
+
+        const fetchRaidApi = new ApiFetchCharacterRaids(data.region, data.character, data.realm)
+        const fetchRaid = fetchRaidApi.getCharacterRaids()
+
+        fetchRaid.then((d) => {
+            setRaidProgress({
+                expansions: d.expansions
+            })
+        })
+
+        console.log(raidProgress.expansions)
 
         fetchChar.then((d) => {
             setMainCharData({
@@ -180,7 +192,9 @@ const Character = () => {
         )
     }
 
-    const renderCharacterGear = () => {
+    const RenderCharacterGear = () => {
+
+        var item: any
 
         if (!gear.gear) {
             return <>No gear</>
@@ -191,8 +205,24 @@ const Character = () => {
             gearlist.push(item)
         })
 
-        console.log(gearlist);
-        
+        const handleShowItem = (_item: any) => {
+            item = _item
+        }
+
+        const renderItem = (item: any) => {
+            if (item && item !== 'undefined') {
+                return (
+                    <span>
+                        {item.name}
+                    </span>
+                )
+            } else {
+                return (
+                    <span>no item</span>
+                )
+            }
+
+        }
 
         return (
             <div className="row">
@@ -201,15 +231,47 @@ const Character = () => {
                     <div className="collapse" id="collapseGear">
                         {
                             gear.gear.map((item: any) => {
-                                return <span style={{ fontSize: '12px', display: 'block' }} className={item.quality.name} key={item.item.id}> {item.slot.name}: {item.name} {item.level.display_string}</span>
+                                return <span onClick={() => handleShowItem(item)} style={{ fontSize: '12px', display: 'block' }} className={item.quality.name} key={item.item.id}> {item.slot.name}: {item.name} {item.level.display_string}</span>
                             })
                         }
                         <span>Equipped ilvl: {mainCharData.item_level}</span>
                     </div>
+                    {/* <div>
+                        <span>
+                            {renderItem(item)}
+                        </span>
+                    </div> */}
                 </div>
             </div>
         )
     }
+
+    const renderCharacterRaidProgress = () => {
+        return raidProgress.expansions.map((raid: any, i: number) => {
+            return (
+                <div className="col" key={i}>
+                    <div className="row">
+                        <div className="col">
+                            <span className="expansion-name">{raid.expansion.name}</span>
+                        </div>
+                    </div>
+                    {/* <div className="row">
+                        <div className="col">
+                            <button type="button" className="btn btn-dark-mode" data-bs-toggle="collapse" data-bs-target={''.concat('#', raid.expansion.id)} aria-expanded="false" aria-controls={raid.expansion.name}>Raids</button>
+                            <div className="collapse" id={raid.expansion.id.toString()}>
+                                {
+                                    raid.instances.map((instance: any, index: number) => {
+                                        return <span key={index}>{instance.name}</span>
+                                    })
+                                }
+                            </div>
+                        </div>
+                    </div> */}
+                </div>
+            )
+        })
+    }
+
 
 
     return (
@@ -227,9 +289,20 @@ const Character = () => {
                         </div>
                     </div>
                 </div>
-                {renderCharacterGear()}
-                {renderBestRuns()}
-            </div></>
+                <div className="row mt-3">
+                    <div className="col">
+                        {RenderCharacterGear()}
+                    </div>
+                    <div className="col">
+                        {renderBestRuns()}
+                    </div>
+                </div>
+
+                <div className="row mt-5">
+                    {renderCharacterRaidProgress()}
+                </div>
+            </div>
+        </>
     )
 }
 
