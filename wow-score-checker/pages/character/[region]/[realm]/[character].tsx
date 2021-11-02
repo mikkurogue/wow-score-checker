@@ -8,6 +8,7 @@ import ApiGetCharGear from '../../../../rest/api.get.char.gear'
 import ApiFetchCharacter from '../../../../rest/api.fetch.character'
 import type { NextPage } from 'next'
 import ApiFetchCharacterRaids from '../../../../rest/api.fetch.character.raids'
+import { find } from 'lodash'
 
 const Character = () => {
     const router = useRouter()
@@ -247,29 +248,80 @@ const Character = () => {
     }
 
     const renderCharacterRaidProgress = () => {
-        return raidProgress.expansions.map((raid: any, i: number) => {
+
+        const currentRaidTierProgress = find(raidProgress.expansions, (predicate) => {
+            return predicate.expansion.name === "Shadowlands"
+        })
+
+        if (currentRaidTierProgress === undefined || currentRaidTierProgress === 'undefined') return <>Loading raids</>
+
+        console.log(currentRaidTierProgress)
+        return currentRaidTierProgress.instances.map((raid: any, i: number) => {
             return (
                 <div className="col" key={i}>
                     <div className="row">
                         <div className="col">
-                            <span className="expansion-name">{raid.expansion.name}</span>
-                        </div>
-                    </div>
-                    {/* <div className="row">
-                        <div className="col">
-                            <button type="button" className="btn btn-dark-mode" data-bs-toggle="collapse" data-bs-target={''.concat('#', raid.expansion.id)} aria-expanded="false" aria-controls={raid.expansion.name}>Raids</button>
-                            <div className="collapse" id={raid.expansion.id.toString()}>
+                            <span className="instance-title">{raid.instance.name}</span>
+                            <ol className="list-group nav-dark">
                                 {
-                                    raid.instances.map((instance: any, index: number) => {
-                                        return <span key={index}>{instance.name}</span>
+                                    raid.modes.map((cleared: any) => {
+                                        return (
+                                            <div className="dropdown" key={cleared.difficulty.type}>
+                                                <li className="list-group-item d-flex justify-content-between align-items-start">
+                                                    <div className="ms-2 me-auto">
+                                                        <div className="fw-bold">{cleared.difficulty.name}</div>
+                                                        <span className="progress">{cleared.progress.completed_count} / {cleared.progress.total_count}</span>
+                                                        <span className="in-progress-or-clear">{cleared.status.name}</span>
+                                                        <button id="dropdownMenuRaid" data-bs-toggle="dropdown" aria-expanded="false" className="btn btn-secondary dropdown-toggle">
+                                                            Completed encounters
+                                                        </button>
+                                                        <ul className="dropdown-menu" aria-labelledby="dropdownMenuRaid">
+                                                            {
+                                                                cleared.progress.encounters.map((progress: any, index: number) => {
+                                                                    return (
+                                                                        <li key={index} className="dropdown-item">
+                                                                            {progress.encounter.name}
+                                                                        </li>
+                                                                    )
+                                                                })
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            </div>
+                                        )
                                     })
                                 }
-                            </div>
+                            </ol>
                         </div>
-                    </div> */}
+                    </div>
                 </div>
             )
         })
+
+        // return raidProgress.expansions.map((raid: any, i: number) => {
+        //     return (
+        //         <div className="col" key={i}>
+        //             <div className="row">
+        //                 <div className="col">
+        //                     <span className="expansion-name">{raid.expansion.name}</span>
+        //                 </div>
+        //             </div>
+        //             {/* <div className="row">
+        //                 <div className="col">
+        //                     <button type="button" className="btn btn-dark-mode" data-bs-toggle="collapse" data-bs-target={''.concat('#', raid.expansion.id)} aria-expanded="false" aria-controls={raid.expansion.name}>Raids</button>
+        //                     <div className="collapse" id={raid.expansion.id.toString()}>
+        //                         {
+        //                             raid.instances.map((instance: any, index: number) => {
+        //                                 return <span key={index}>{instance.name}</span>
+        //                             })
+        //                         }
+        //                     </div>
+        //                 </div>
+        //             </div> */}
+        //         </div>
+        //     )
+        // })
     }
 
 

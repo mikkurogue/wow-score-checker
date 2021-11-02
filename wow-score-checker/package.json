@@ -14,6 +14,7 @@
     "axios": "^0.22.0",
     "blizzapi": "^2.0.4",
     "bootstrap": "^5.0.0-beta3",
+    "lodash": "^4.17.21",
     "next": "11.1.2",
     "passport": "^0.5.0",
     "passport-bnet": "^2.0.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@types/bootstrap": "^5.1.6",
+    "@types/lodash": "^4.14.176",
     "@types/react": "17.0.27",
     "eslint": "7.32.0",
     "eslint-config-next": "11.1.2",
