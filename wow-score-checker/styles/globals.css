@@ -21,6 +21,11 @@ a {
     background-color: #272727 !important;
 }
 
+.list-group-item {
+    background-color: #272727 !important;
+    color: #fff;
+}
+
 .center-items {
     display: flex;
     justify-content: center;
@@ -99,6 +104,17 @@ a {
     font-weight: 700;
 }
 
+.progress {
+    display: flex;
+    background-color: unset;
+    padding: 3px;
+}
+
+.in-progress-or-clear {
+    display: flex;
+    font-size: 13px;
+    font-weight: lighter;
+}
 
 
 /**
