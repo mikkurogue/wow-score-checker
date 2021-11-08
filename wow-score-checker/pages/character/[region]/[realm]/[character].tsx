@@ -6,7 +6,6 @@ import { isSSR } from '../../../../Helpers/utils'
 import ApiGetCharAppreance from '../../../../rest/api.get.char.appearace'
 import ApiGetCharGear from '../../../../rest/api.get.char.gear'
 import ApiFetchCharacter from '../../../../rest/api.fetch.character'
-import type { NextPage } from 'next'
 import ApiFetchCharacterRaids from '../../../../rest/api.fetch.character.raids'
 import { find } from 'lodash'
 
@@ -298,33 +297,7 @@ const Character = () => {
                 </div>
             )
         })
-
-        // return raidProgress.expansions.map((raid: any, i: number) => {
-        //     return (
-        //         <div className="col" key={i}>
-        //             <div className="row">
-        //                 <div className="col">
-        //                     <span className="expansion-name">{raid.expansion.name}</span>
-        //                 </div>
-        //             </div>
-        //             {/* <div className="row">
-        //                 <div className="col">
-        //                     <button type="button" className="btn btn-dark-mode" data-bs-toggle="collapse" data-bs-target={''.concat('#', raid.expansion.id)} aria-expanded="false" aria-controls={raid.expansion.name}>Raids</button>
-        //                     <div className="collapse" id={raid.expansion.id.toString()}>
-        //                         {
-        //                             raid.instances.map((instance: any, index: number) => {
-        //                                 return <span key={index}>{instance.name}</span>
-        //                             })
-        //                         }
-        //                     </div>
-        //                 </div>
-        //             </div> */}
-        //         </div>
-        //     )
-        // })
     }
-
-
 
     return (
         <>
